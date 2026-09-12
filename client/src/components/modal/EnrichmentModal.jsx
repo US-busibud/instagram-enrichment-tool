@@ -19,6 +19,7 @@ export default function EnrichmentModal({ isOpen, onClose }) {
   const [targetUrl, setTargetUrl] = useState("https://www.instagram.com/nasa");
   const [resultLimit, setResultLimit] = useState(20);
   const [newerThanDays, setNewerThanDays] = useState(20);
+  const [newerThanUnit, setNewerThanUnit] = useState("Days");
   const [isLoading, setIsLoading] = useState(false);
   const [previewData, setPreviewData] = useState(null);
   const [addMessage, setAddMessage] = useState("");
@@ -370,20 +371,66 @@ export default function EnrichmentModal({ isOpen, onClose }) {
                   </div>
                 </div>
 
-                {/* OPTIONAL */}
-                <h4 className="font-semibold text-[14px] mt-3 mb-2">
-                  Optional input fields for Instagram
-                </h4>
+                {/* OPTIONAL INPUT FIELDS */}
+                <div className="border border-gray-200 rounded-md p-4 bg-gray-50">
+                  <h4 className="font-semibold text-[16px] text-gray-900 mb-4">
+                    Optional input fields for Instagram
+                  </h4>
 
-                <div className="border border-gray-200 bg-gray-50 p-3 mb-2">
-                  <label className="text-[11px] block mb-1">Result Limit</label>
+                  <div className="space-y-4">
+                    {/* RESULT LIMIT */}
+                    <div>
+                      <label className="text-[13px] font-semibold text-gray-500 block mb-1.5">
+                        Result Limit
+                      </label>
 
-                  <input
-                    type="number"
-                    value={resultLimit}
-                    onChange={(e) => setResultLimit(Number(e.target.value))}
-                    className="border border-gray-300 rounded-md px-3 py-2 text-[12px] w-[300px] bg-white"
-                  />
+                      <input
+                        type="number"
+                        value={resultLimit}
+                        onChange={(e) => setResultLimit(Number(e.target.value))}
+                        className="w-[80px] bg-white border border-gray-300 rounded-md px-3 py-2.5 text-[14px] text-gray-700 focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+
+                    {/* ONLY POST NEWER THAN - POST ONLY */}
+                    {enrichmentType === "post" && (
+                      <div>
+                        <label className="text-[13px] font-semibold text-gray-500 block mb-1.5">
+                          Only post newer than
+                        </label>
+
+                        <div className="flex items-center gap-2">
+                          {/* NUMBER */}
+                          <input
+                            type="number"
+                            value={newerThanDays}
+                            onChange={(e) =>
+                              setNewerThanDays(Number(e.target.value))
+                            }
+                            className="w-[70px] bg-white border border-gray-300 rounded-md px-3 py-2.5 text-[14px] text-gray-700 focus:outline-none focus:border-blue-500"
+                          />
+
+                          {/* UNIT */}
+                          <div className="relative">
+                            <select
+                              value={newerThanUnit}
+                              onChange={(e) => setNewerThanUnit(e.target.value)}
+                              className="w-[110px] appearance-none bg-white border border-gray-300 rounded-md px-3 py-2.5 pr-8 text-[14px] text-gray-700 focus:outline-none focus:border-blue-500"
+                            >
+                              <option value="Days">Days</option>
+                              <option value="Months">Months</option>
+                              <option value="Years">Years</option>
+                            </select>
+
+                            <ChevronDown
+                              size={15}
+                              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Generate Preview */}
